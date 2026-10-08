@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# curl -fsSL https://raw.githubusercontent.com/parsarzn/tunnels/refs/heads/main/load.sh -o /root/load.sh && bash /root/load.sh
 set -Eeuo pipefail
 
 # EDIT ONLY THIS SECTION. IPv4 only. Empty interface = default-route interface.
