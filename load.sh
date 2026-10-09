@@ -13,7 +13,7 @@ SNAT_IP=""
 # Same incoming port on multiple destinations = weighted connection balancing.
 # The dash is a mapping separator, NOT a port range.
 TARGETS=(
-  "5.75.198.192|2020-2020,2021-2021,2022-2022,2023-2023,443-443|1"
+  "5.75.193.88|2020-2020,2021-2021,2022-2022,2023-2023,443-443|1"
   "91.107.158.102|3030-3030,3031-3031,3032-3032|1"
 )
 PROTOCOLS="tcp" # tcp / udp / both
