@@ -2,6 +2,10 @@
 # curl -fsSL https://raw.githubusercontent.com/parsarzn/tunnels/refs/heads/main/load.sh -o /root/load.sh && bash /root/load.sh
 set -Eeuo pipefail
 
+if [[ $EUID -ne 0 && ${1:-apply} != check ]]; then
+  exec sudo -i -- bash "$(readlink -f "${BASH_SOURCE[0]}")" "$@"
+fi
+
 # EDIT ONLY THIS SECTION. IPv4 only. Empty interface = default-route interface.
 IN_IF=""
 # Local destination IP seen by Linux (use private IP on cloud NAT).
@@ -153,3 +157,17 @@ systemctl enable port-lb.service >/dev/null
 echo "Applied. Persistent script: /etc/port-lb/port-lb.sh"
 echo "After editing: sudo bash /etc/port-lb/port-lb.sh apply"
 echo "Existing connections retain their previous destination. No health checks."
+
+if [[ $source_path != /etc/port-lb/port-lb.sh ]]; then
+  command -v wget >/dev/null || {
+    apt-get update
+    apt-get install -y wget
+  }
+
+  (
+    cd "$tmp"
+    wget -N --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh
+    chmod +x bbr.sh
+    bash bbr.sh
+  )
+fi
